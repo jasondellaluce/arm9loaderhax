@@ -70,6 +70,9 @@ Once you have all of the required files, the compilation needs:
 * Yellows8 and Plutoo as ideators of it
 * [http://3dbrew.org/](3dbrew community)
 
+Copyright 2016 Jason Dellaluce
+Licensed under GPLv2 or any later version, refer to the license.txt file included.
+
 
 
 
