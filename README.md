@@ -34,7 +34,7 @@ The setup is absolutely user-unfriendly because of the files that needs to be pr
 
 In order to make this work you need to creat a directory in the setup root named **data_input**, and put the following files in it :
 
-* **new3ds10.firm** : New 3DS NATIVE_FIRM from system version 10.0. You can dump and decrypt it from both the CDN, NAND, the proper **0004013800000002.cia**, or in any way get it leaked.
+* **new3ds10.firm** : New 3DS NATIVE_FIRM from system version 10.2. You can dump and decrypt it from both the CDN, NAND, the proper **0004013820000002.cia**, or in any way get it leaked.
 
 
 	SHA-256 : d253c1cc0a5ffac6b383dac1827cfb3b2d3d566c6a1a8e5254e389c2950623e5
@@ -60,6 +60,12 @@ Once you have all of the required files, the compilation needs:
 
 ## Credits
 
+Copyright 2016, Jason Dellaluce
+
+sdmmc.c & sdmmc.h originally written by Normatt
+
+Licensed under GPLv2 or any later version, refer to the license.txt file included.
+
 * Smealum and contributors for libctru
 * Normatt for sdmmc.c and .h, and also for .ld files
 * Christophe Devine for the SHA codes
@@ -69,9 +75,6 @@ Once you have all of the required files, the compilation needs:
 * Smealum, Derrek, Plutoo for publishing the exploit
 * Yellows8 and Plutoo as ideators of it
 * [http://3dbrew.org/](3dbrew community)
-
-Copyright 2016 Jason Dellaluce
-Licensed under GPLv2 or any later version, refer to the license.txt file included.
 
 
 
