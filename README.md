@@ -58,6 +58,18 @@ Once you have all of the required files, the compilation needs:
 * Python 2.7 with pycrypto
 * libctru at least on v1.0.0
 
+## Credits
+
+* Smealum and contributors for libctru
+* Normatt for sdmmc.c and .h, and also for .ld files
+* Christophe Devine for the SHA codes
+* Archshift for i2c.c and .h
+* Megazig for crypto.c and .h
+* Patois for original BRAHMA code
+* Smealum, Derrek, Plutoo for publishing the exploit
+* Yellows8 and Plutoo as ideators of it
+* [http://3dbrew.org/](3dbrew community)
+
 
 
 
