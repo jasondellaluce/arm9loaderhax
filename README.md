@@ -30,7 +30,7 @@ If, for any reason, you desire to inject the files manually remember to:
 
 ## Setup
 
-The setup is absolutely user-unfriendly becouse of the files that needs to be provided in compilation.
+The setup is absolutely user-unfriendly because of the files that needs to be provided in compilation.
 
 In order to make this work you need to creat a directory in the setup root named **data_input**, and put the following files in it :
 
@@ -49,7 +49,7 @@ In order to make this work you need to creat a directory in the setup root named
 
 	SHA-256 : 82f2730d2c2da3f30165f987fdccac5cbab24b4e5f65c981cd7be6f438e6d9d3
 * **otp.bin** : A dump of your console OTP data from region 0x10012000-0x10012100; in order to dump it you must downgrade to a system version below 3.0, or exploit the New3DS-only vulnerability (This will just give you the hash of it, so you'll need to change the python script).
-**it is console unique, and as such it cannot be shared from other people, becouse it will cause a brick!**
+**it is console unique, and as such it cannot be shared from other people, because it will cause a brick!**
 
 
 Once you have all of the required files, the compilation needs:
