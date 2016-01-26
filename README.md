@@ -24,7 +24,7 @@ If, for any reason, you desire to inject the files manually remember to:
 
 * Inject **firm0.bin** in the NAND FIRM0 partition, encrypted with your xor stream.
 * Inject **firm1.bin** in the NAND FIRM1 partition, encrypted with your xor stream.
-* Inject **sector.bin** at sector 0.96, in the plaintext output you'll have.
+* Inject **sector.bin** at sector 0x96, in the plaintext output you'll have.
 * Inject **stage0x5C000.bin** at sector 0x5C000, in his plaintext form. It is an unused region for now, you'll not ruin your nand.
 
 
