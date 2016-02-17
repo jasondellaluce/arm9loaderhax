@@ -74,7 +74,7 @@ Licensed under GPLv2 or any later version, refer to the license.txt file include
 * Patois for original BRAHMA code
 * Smealum, Derrek, Plutoo for publishing the exploit
 * Yellows8 and Plutoo as ideators of it
-* [http://3dbrew.org/](3dbrew community)
+* [3dbrew community](http://3dbrew.org/)
 
 
 
