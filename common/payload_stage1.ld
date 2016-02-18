@@ -17,6 +17,12 @@ SECTIONS
 		} >ram = 0xff
 	.plt : { *(.plt) } >ram = 0xff
 
+	.text.start :   /* ALIGN (4): */
+	{
+		*(.text.start)
+		. = ALIGN(4);  /* REQUIRED. LD is flaky without it. */
+	} >ram = 0xff
+
 	.text :   /* ALIGN (4): */
 	{
 		*(.text .stub .text.* .gnu.linkonce.t.*)
