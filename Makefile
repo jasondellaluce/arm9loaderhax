@@ -1,4 +1,4 @@
-.PHONY : all hax firm0 firm1 sector stage2 installer clean
+.PHONY : all hax firm0 firm1 sector screen_init stage2 installer clean
 
 TARGET		=	arm9loaderhax
 PYTHON 		=	python
@@ -7,29 +7,34 @@ OUTDIR		=	data_output
 
 all : $(OUTDIR) hax installer
 
-hax : $(OUTDIR) firm0 firm1 sector stage2
+hax : $(OUTDIR) firm0 firm1 sector screen_init stage2
 
 $(OUTDIR):
 	@[ -d $(OUTDIR) ] || mkdir -p $(OUTDIR)
 
-firm0 :
+firm0:
 	@cd payload_stage1 && make
 	@cp $(INDIR)/new3ds90.firm $(OUTDIR)/firm0.bin
 	@dd if=payload_stage1/payload_stage1.bin of=$(OUTDIR)/firm0.bin bs=512 seek=1922 conv=notrunc
 	@echo FIRM0 done!
 
-firm1 :	
+firm1:
 	@cp $(INDIR)/new3ds10.firm $(OUTDIR)/firm1.bin
 	@echo FIRM1 done!
 
-sector :
+sector:
 	@$(PYTHON) common/sector_generator.py $(INDIR)/secret_sector.bin $(INDIR)/otp.bin $(OUTDIR)/sector.bin
 	@echo SECTOR done!
 
+screen_init:
+	@[ -d payload_stage2/data ] || mkdir -p payload_stage2/data
+	$(MAKE) -C screen_init
+	@cp screen_init/screen_init.bin payload_stage2/data/
+
 stage2:
-	@cd payload_stage2 && make
-	@dd if=payload_stage2/payload_stage2.bin of=$(OUTDIR)/firm1.bin bs=512 seek=1936 conv=notrunc
-	@cp payload_stage2/payload_stage2.bin $(OUTDIR)/stage0x5C000.bin 
+	@cp screen_init/screen_init.bin payload_stage2/data
+	@$(MAKE) -C payload_stage2
+	@cp payload_stage2/payload_stage2.bin $(OUTDIR)/stage0x5C000.bin
 
 installer:
 	@cp $(OUTDIR)/sector.bin payload_installer/brahma2/data/sector.bin
@@ -38,11 +43,10 @@ installer:
 	@cp $(OUTDIR)/stage0x5C000.bin  payload_installer/brahma2/data/stage2.bin
 	@cd payload_installer && make TARGET=../$(OUTDIR)/$(TARGET)
 	@echo INSTALLER done!
-	
+
 clean:
 	@echo clean...
-	@cd payload_stage1 && make clean
-	@cd payload_stage2 && make clean
-	@cd payload_installer && make clean TARGET=../$(TARGET)
-	@rm -fr $(OUTDIR) payload_installer/brahma2/data/*.bin
-	
+	@$(MAKE) -C payload_stage1 clean
+	@$(MAKE) -C screen_init clean
+	@$(MAKE) -C payload_stage2 clean
+	@$(MAKE) -C payload_installer clean TARGET=../$(TARGET)
