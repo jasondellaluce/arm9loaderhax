@@ -124,6 +124,7 @@ endif
 all: $(BUILD)
 
 $(BUILD):
+	mkdir data
 	@echo $(SFILES)
 	@[ -d $@ ] || mkdir -p $@
 	@make --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
