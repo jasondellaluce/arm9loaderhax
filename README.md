@@ -14,7 +14,11 @@ It loads an **arm9loaderhax.bin** arm9 payload from the root of the sdcard at ad
 
 This means that it offers a BRAHMA-like setup, and as such has compatibility with every payload BRAHMA can run; you can also perform a firmlaunch by writing the ARM11 kernel entrypoint at address 0x1FFFFFF8.
 
-The problem here is that it doesn't still initialize the screens, that has still to be achieved, though i was able to load an external patched firmware and make boot the console without any problem while testing.
+Screen_init was implemented by [**dark-samus** pull request](https://github.com/delebile/arm9loaderhax/pull/9) (thank!).
+
+## How do I update it?
+
+An updater is in developement.You can test [**dark-samus one**](https://github.com/delebile/arm9loaderhax/issues/10#issuecomment-189914031),but it is unstable. 
 
 ## Installation
 
@@ -67,7 +71,7 @@ sdmmc.c & sdmmc.h originally written by Normatt
 Licensed under GPLv2 or any later version, refer to the license.txt file included.
 
 * Smealum and contributors for libctru
-* Normatt for sdmmc.c and .h, and also for .ld files and the log from 3dmoo9 that provided us with some of the information needed to get screen init
+* Normmatt for sdmmc.c and .h, and also for .ld files and the log from XDS by ichfly that provided us some of the information needed to get screen init
 * Christophe Devine for the SHA codes
 * Archshift for i2c.c and .h
 * Megazig for crypto.c and .h
@@ -77,12 +81,3 @@ Licensed under GPLv2 or any later version, refer to the license.txt file include
 * [3dbrew community](http://3dbrew.org/)
 * bilis/b1l1s for his screen init code, and work on inegrating it into stage 2
 * dark_samus for work on integrating screen init into stage 2
-
-
-
-
-
-
-
-
-
