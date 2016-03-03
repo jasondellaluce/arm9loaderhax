@@ -50,3 +50,5 @@ clean:
 	@$(MAKE) -C screen_init clean
 	@$(MAKE) -C payload_stage2 clean
 	@$(MAKE) -C payload_installer clean TARGET=../$(TARGET)
+	rm -rf data_output
+	rm -rf data_input/otp.bin
