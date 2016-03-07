@@ -14,11 +14,11 @@ It loads an **arm9loaderhax.bin** arm9 payload from the root of the sdcard at ad
 
 This means that it offers a BRAHMA-like setup, and as such has compatibility with every payload BRAHMA can run; you can also perform a firmlaunch by writing the ARM11 kernel entrypoint at address 0x1FFFFFF8.
 
-Screen_init was implemented by [**dark-samus** pull request](https://github.com/delebile/arm9loaderhax/pull/9) (thank!).
+Screen initialization was implemented by [**dark-samus**' pull request](https://github.com/delebile/arm9loaderhax/pull/9) (thanks!).
 
 ## How do I update it?
 
-An updater is in developement.You can test [**dark-samus one**](https://github.com/delebile/arm9loaderhax/issues/10#issuecomment-189914031),but it is unstable. 
+An updater is currently in developement. You can test [**dark-samus' one**](https://gbatemp.net/attachments/installer-zip.40329/), but it's currently unfinished and unstable. 
 
 ## Installation
 
