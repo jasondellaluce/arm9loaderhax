@@ -3,7 +3,7 @@ CMakeLists.txt
 
 data_input/*.bin
 data_input/*.firm
-playload_installer/brahma2/data
+payload_installer/brahma2/data
 
 # Output
 data_output
