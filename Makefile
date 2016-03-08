@@ -52,4 +52,6 @@ clean:
 	@$(MAKE) -C payload_stage2 clean
 	@$(MAKE) -C payload_installer clean TARGET=../$(TARGET)
 	rm -rf data_output
+	
+purge: clean
 	rm -rf data_input/otp.bin
