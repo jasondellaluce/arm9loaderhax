@@ -1,8 +1,16 @@
 .idea
 CMakeLists.txt
 
-data_output
 data_input/*.bin
 data_input/*.firm
+playload_installer/brahma2/data
+
+# Output
+data_output
+*.3dsx
+*.elf
+*.o
+*.bin
+build
 
 *.bat

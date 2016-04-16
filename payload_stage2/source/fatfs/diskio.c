@@ -15,6 +15,7 @@
 #define MMC     1
 #define USB     2
 
+static DSTATUS status;
 
 /*-----------------------------------------------------------------------*/
 /* Inidialize a Drive                                                    */
@@ -24,8 +25,13 @@ DSTATUS disk_initialize (
     BYTE pdrv               /* Physical drive nmuber (0..) */
 )
 {
-    sdmmc_sdcard_init();
-    return RES_OK;
+    int result = sdmmc_sdcard_init();
+    if (result)
+    {
+        status = STA_NOINIT;
+    }
+    status = RES_OK;
+    return status;
 }
 
 
@@ -38,7 +44,7 @@ DSTATUS disk_status (
     BYTE pdrv       /* Physical drive nmuber (0..) */
 )
 {
-    return RES_OK; // Stubbed
+    return status;
 }
 
 
@@ -54,13 +60,17 @@ DRESULT disk_read (
     UINT count      /* Number of sectors to read (1..128) */
 )
 {
-    switch(pdrv){
+    if (!status)
+    {
+        switch(pdrv){
         case 0:
             if (sdmmc_sdcard_readsectors(sector,count,buff))
-                return RES_PARERR;
+            return RES_PARERR;
             break;
+        }
+        return RES_OK;
     }
-    return RES_OK;
+    return RES_NOTRDY;
 }
 
 
@@ -77,13 +87,17 @@ DRESULT disk_write (
     UINT count          /* Number of sectors to write (1..128) */
 )
 {
-    switch(pdrv){
-        case 0:
-            if (sdmmc_sdcard_writesectors(sector,count,buff))
-                return RES_PARERR;
-            break;
+    if (!status)
+    {
+        switch(pdrv){
+            case 0:
+                if (sdmmc_sdcard_writesectors(sector,count,buff))
+                    return RES_PARERR;
+                break;
+        }
+        return RES_OK;
     }
-    return RES_OK;
+    return RES_NOTRDY;
 }
 #endif
 
@@ -99,7 +113,8 @@ DRESULT disk_ioctl (
     void *buff      /* Buffer to send/receive control data */
 )
 {
-	return RES_OK;
-    //return RES_PARERR; // Stubbed
+    if (!status)
+        return RES_OK;
+    return RES_NOTRDY;
 }
 #endif

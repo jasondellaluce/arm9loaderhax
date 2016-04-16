@@ -18,7 +18,8 @@ all:
 	@echo build ...
 	@cd $(LOADERDIR) && make OUTPUT=../../$(EXPLOITDIR)/data/starter
 	@cd $(EXPLOITDIR) && make OUTPUT=../../$(TARGET)
-	@rm -f *.elf
+	@cp $(EXPLOITDIR)/data/starter.bin $(TARGET).bin
+	@rm -f *.elf $(TARGET).elf
 	@echo done!!
 
 clean:

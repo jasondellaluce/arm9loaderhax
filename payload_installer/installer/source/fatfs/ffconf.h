@@ -23,7 +23,7 @@
 /  f_rename(), f_truncate() and useless f_getfree(). */
 
 
-#define _FS_MINIMIZE    2   /* 0 to 3 */
+#define _FS_MINIMIZE    0   /* 0 to 3 */
 /* The _FS_MINIMIZE option defines minimization level to remove API functions.
 /
 /   0: All basic functions are enabled.
@@ -118,7 +118,7 @@
 /  f_puts and f_printf(). This option has no effect when Unicode API is not enabled. */
 
 
-#define _FS_RPATH       0   /* 0 to 2 */
+#define _FS_RPATH       1   /* 0 to 2 */
 /* The _FS_RPATH option configures relative path feature.
 /
 /   0: Disable relative path feature and remove related functions.
@@ -136,8 +136,8 @@
 /* Number of volumes (logical drives) to be used. */
 
 
-#define _STR_VOLUME_ID  0   /* 0:Use only 0-9 for drive ID, 1:Use strings for drive ID */
-#define _VOLUME_STRS    "RAM","NAND","CF","SD1","SD2","USB1","USB2","USB3"
+#define _STR_VOLUME_ID  1   /* 0:Use only 0-9 for drive ID, 1:Use strings for drive ID */
+#define _VOLUME_STRS    "SDMC","NAND","CF","SD1","SD2","USB1","USB2","USB3"
 /* When _STR_VOLUME_ID is set to 1, also pre-defined string can be used as drive number
 /  in the path name. _VOLUME_STRS defines the drive ID strings for each logical drives.
 /  Number of items must be equal to _VOLUMES. Valid characters for the drive ID strings
