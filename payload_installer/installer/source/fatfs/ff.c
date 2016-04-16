@@ -2758,7 +2758,6 @@ FRESULT f_read (
         mem_cpy(rbuff, &fp->buf[fp->fptr % SS(fp->fs)], rcnt);  /* Pick partial sector */
 #endif
     }
-	fp->dsect = sect;
     LEAVE_FF(fp->fs, FR_OK);
 }
 

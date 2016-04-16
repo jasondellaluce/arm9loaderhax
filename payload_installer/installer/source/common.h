@@ -26,16 +26,17 @@
        __typeof__ (b) _b = (b); \
        _a < _b ? _a : _b; })
 
-inline char* strupper(const char* str) {
-    char* buffer = (char*)malloc(strlen(str) + 1);
-    for (int i = 0; i < strlen(str); ++i)
-        buffer[i] = toupper((unsigned)str[i]);
-    return buffer;
-}
+// Internals
+#include "screen.h"
+#include "system/delay.h"
+#include "system/hid.h"
+#include "system/i2c.h"
+#include "system/sdmmc.h"
+#include "system/draw.h"
+#include "system/crypto.h"
+#include "system/nand.h"
+#include "fatfs/ff.h"
+#include "fatfs/fs.h"
 
-inline char* strlower(const char* str) {
-    char* buffer = (char*)malloc(strlen(str) + 1);
-    for (int i = 0; i < strlen(str); ++i)
-        buffer[i] = tolower((unsigned)str[i]);
-    return buffer;
-}
+#define isNew3DS	(*((volatile u32*)0x10140FFC) == 7)
+#define isColdBoot	(*((volatile u32*)0x10010000) == 0)

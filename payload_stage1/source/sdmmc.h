@@ -125,11 +125,7 @@ void sdmmc_sdcard_writesector(uint32_t sector_no, void *in);
 void sdmmc_sdcard_writesectors(uint32_t sector_no, uint32_t numsectors, void *in);
 void sdmmc_blktransferinit();*/
 
-void sdmmc_sdcard_init();
-int sdmmc_sdcard_readsector(u32 sector_no, u8 *out);
-int sdmmc_sdcard_readsectors(u32 sector_no, u32 numsectors, u8 *out);
-int sdmmc_sdcard_writesector(u32 sector_no, u8 *in);
-int sdmmc_sdcard_writesectors(u32 sector_no, u32 numsectors, u8 *in);
+int sdmmc_sdcard_init();
 
 int sdmmc_nand_readsectors(u32 sector_no, u32 numsectors, u8 *out);
 int sdmmc_nand_writesectors(u32 sector_no, u32 numsectors, u8 *in);
@@ -138,34 +134,4 @@ mmcdevice *getMMCDevice(int drive);
 
 void InitSDMMC();
 int Nand_Init();
-int SD_Init();
 
-static inline u16 sdmmc_read16(u16 reg) {
-    return *(vu16*)(SDMMC_BASE + reg);
-}
-
-static inline void sdmmc_write16(u16 reg, u16 val) {
-    *(vu16*)(SDMMC_BASE + reg) = val;
-}
-
-static inline u32 sdmmc_read32(u16 reg) {
-    return *(vu32*)(SDMMC_BASE + reg);
-}
-
-static inline void sdmmc_write32(u16 reg, u32 val) {
-    *(vu32*)(SDMMC_BASE + reg) = val;
-}
-
-static inline void sdmmc_mask16(u16 reg, const u16 clear, const u16 set) {
-    u16 val = sdmmc_read16(reg);
-    val &= ~clear;
-    val |= set;
-    sdmmc_write16(reg, val);
-}
-
-static inline void setckl(u32 data)
-{
-    sdmmc_mask16(REG_SDCLKCTL, 0x100, 0);
-    sdmmc_mask16(REG_SDCLKCTL, 0x2FF, data & 0x2FF);
-    sdmmc_mask16(REG_SDCLKCTL, 0x0, 0x100);
-}

@@ -14,6 +14,37 @@
 static struct mmcdevice handleNAND;
 static struct mmcdevice handleSD;
 
+static inline u16 sdmmc_read16(u16 reg) {
+    return *(vu16*)(SDMMC_BASE + reg);
+}
+
+static inline void sdmmc_write16(u16 reg, u16 val) {
+    *(vu16*)(SDMMC_BASE + reg) = val;
+}
+
+static inline u32 sdmmc_read32(u16 reg) {
+    return *(vu32*)(SDMMC_BASE + reg);
+}
+
+static inline void sdmmc_write32(u16 reg, u32 val) {
+    *(vu32*)(SDMMC_BASE + reg) = val;
+}
+
+static inline void sdmmc_mask16(u16 reg, const u16 clear, const u16 set) {
+    u16 val = sdmmc_read16(reg);
+    val &= ~clear;
+    val |= set;
+    sdmmc_write16(reg, val);
+}
+
+static inline void setckl(u32 data)
+{
+    sdmmc_mask16(REG_SDCLKCTL, 0x100, 0);
+    sdmmc_mask16(REG_SDCLKCTL, 0x2FF, data & 0x2FF);
+    sdmmc_mask16(REG_SDCLKCTL, 0x0, 0x100);
+}
+
+
 mmcdevice *getMMCDevice(int drive)
 {
     if(drive==0) return &handleNAND;
@@ -390,8 +421,14 @@ int Nand_Init()
 int SD_Init()
 {
     inittarget(&handleSD);
+
     //ioDelay(0x3E8);
-    ioDelay(0xF000);
+    //ioDelay(0xF000);
+    ioDelay(1u << 18);
+    
+    //If not inserted
+    if (!(*((vu16*)0x1000601c) & TMIO_STAT0_SIGSTATE)) return -1;
+    
     sdmmc_send_command(&handleSD,0,0);
     sdmmc_send_command(&handleSD,0x10408,0x1AA);
     //u32 temp = (handleSD.ret[0] == 0x1AA) << 0x1E;
@@ -455,9 +492,9 @@ int SD_Init()
     return 0;
 }
 
-void sdmmc_sdcard_init()
+int sdmmc_sdcard_init()
 {
     InitSD();
     Nand_Init();
-    SD_Init();
+    return SD_Init();
 }

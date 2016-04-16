@@ -1,1 +1,0 @@
-extern const unsigned char font_bin[];
