@@ -18,9 +18,9 @@ include $(DEVKITARM)/ds_rules
 #---------------------------------------------------------------------------------
 TARGET 		:=  $(notdir $(CURDIR))
 BUILD		:=	build
-SOURCES		:=	source source/fatfs source/system
+SOURCES		:=	source source/fatfs
 DATA		:=	data
-INCLUDES	:=	include source 
+INCLUDES	:=	include source source/fatfs
 
 #---------------------------------------------------------------------------------
 # Setup some defines

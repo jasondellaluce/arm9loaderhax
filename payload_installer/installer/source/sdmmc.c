@@ -73,14 +73,10 @@ void __attribute__((noinline)) sdmmc_send_command(struct mmcdevice *ctx, u32 cmd
 
     u32 size = ctx->size;
     u16 *dataPtr = (u16*)ctx->data;
-#ifdef DATA32_SUPPORT
     u32 *dataPtr32 = (u32*)ctx->data;
-#endif
 
     bool useBuf = ( NULL != dataPtr );
-#ifdef DATA32_SUPPORT
     bool useBuf32 = (useBuf && (0 == (3 & ((u32)dataPtr))));
-#endif
 
     u16 status0 = 0;
     while(true) {
@@ -230,30 +226,32 @@ int __attribute__((noinline)) sdmmc_nand_writesectors(u32 sector_no, u32 numsect
     return geterror(&handleNAND);
 }
 
-static u32 calcSDSize(u8* csd, int type)
+u32 calcSDSize(u8* csd, int type)
 {
     u32 result = 0;
-    if (type == -1) type = csd[14] >> 6;
+    u8 temp = csd[0xE];
+    //int temp3 = type;
+
     switch (type) {
-        case 0:
-            {
-                u32 block_len = csd[9] & 0xf;
-                block_len = 1 << block_len;
-                u32 mult = (csd[4] >> 7) | ((csd[5] & 3) << 1);
-                mult = 1 << (mult + 2);
-                result = csd[8] & 3;
-                result = (result << 8) | csd[7];
-                result = (result << 2) | (csd[6] >> 6);
-                result = (result + 1) * mult * block_len / 512;
-            }
+        case -1:
+            type = temp >> 6;
             break;
+        case 0:
+        {
+            u32 temp = (csd[0x7] << 0x2 | csd[0x8] << 0xA | csd[0x6] >> 0x6 | (csd[0x9] & 0xF) << 0x10) & 0xFFF;
+            u32 temp2 = temp * (1 << (csd[0x9] & 0xF));
+            u32 retval = temp2 * (1 << (((csd[0x4] >> 7 | csd[0x5] << 1) & 7) + 2));
+            result = retval >> 9;
+            break;
+        }
         case 1:
-            result = csd[7] & 0x3f;
-            result = (result << 8) | csd[6];
-            result = (result << 8) | csd[5];
-            result = (result + 1) * 1024;
+            result = (((csd[0x7] & 0x3F) << 0x10 | csd[0x6] << 8 | csd[0x5]) + 1) << 0xA;
+            break;
+        default:
+            result = 0;
             break;
     }
+
     return result;
 }
 
@@ -458,6 +456,6 @@ int SD_Init()
 void sdmmc_sdcard_init()
 {
     InitSD();
-    Nand_Init();
-    SD_Init();
+    u32 nand_res = Nand_Init();
+    u32 sd_res = SD_Init();
 }
