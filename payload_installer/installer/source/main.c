@@ -102,14 +102,14 @@ int packAnalyze(void* buf, size_t size)
 		if(!valid)
 		{
 			Debug("");
-			Debug("The listed content will be installed in your");
+			Debug("The listed content will be installed on your");
 			Debug("%s console. Be sure to not remove", isNew3DS ? "NEW 3DS" : "OLD 3DS");
 			Debug("your SD card during the installation process");
-			Debug("and that the pack your are using contains your");
+			Debug("and that the pack you're using contains your");
 			Debug("console-specific necessary data, otherwise you");
-			Debug("risk to permanent BRICK your console.");
+			Debug("risk permanently BRICKING your console.");
 			Debug("");
-			Debug("Press START to continue, of B to abort...");
+			Debug("Press START to continue, or B to abort...");
 			Debug("");
 			while(1)
 			{
