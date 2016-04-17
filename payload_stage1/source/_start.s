@@ -49,6 +49,7 @@ _start:
     mov r0, #0x25
     mcr p15, 0, r0, c2, c0, 0  @ data cacheable
     mcr p15, 0, r0, c2, c0, 1  @ instruction cacheable
+	mov r0, #0x5 @ Fixes payloads which don't like FCRAM as "data bufferable"
     mcr p15, 0, r0, c3, c0, 0  @ data bufferable
 
     bl main
