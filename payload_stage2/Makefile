@@ -31,7 +31,7 @@ INCLUDES	:=	include source source/fatfs
 #---------------------------------------------------------------------------------
 ARCH	:=	-mthumb -mthumb-interwork
 
-CFLAGS	:=	-g -Wall -O2\
+CFLAGS	:=	-g -Wall -Wno-unused-function -O2\
 			-march=armv5te -mtune=arm946e-s -fomit-frame-pointer\
 			-ffast-math -std=c11\
 			$(ARCH)

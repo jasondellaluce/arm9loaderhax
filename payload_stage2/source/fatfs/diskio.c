@@ -64,7 +64,7 @@ DRESULT disk_read (
     {
         switch(pdrv){
         case 0:
-            if (sdmmc_sdcard_readsectors(sector,count,buff))
+            if (sdmmc_sdcard_readsectors(sector,count,(u8*)buff))
             return RES_PARERR;
             break;
         }
@@ -91,7 +91,7 @@ DRESULT disk_write (
     {
         switch(pdrv){
             case 0:
-                if (sdmmc_sdcard_writesectors(sector,count,buff))
+                if (sdmmc_sdcard_writesectors(sector,count,(u8*)buff))
                     return RES_PARERR;
                 break;
         }

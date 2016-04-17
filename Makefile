@@ -9,6 +9,7 @@ PACKTOOL	=	common/pack_tool
 all : $(OUTDIR) hax installer
 
 hax : $(OUTDIR) firm0 firm1 sector screen_init stage2 package
+	@cd payload_installer/installer && make TARGET=../../$(OUTDIR)/$(TARGET)
 
 stage2_update: $(OUTDIR) $(PACKTOOL) stage2 
 	@$(PACKTOOL) null null null $(OUTDIR)/stage0x5C000.bin
@@ -52,7 +53,6 @@ $(PACKTOOL):
 installer:
 	@mkdir -p payload_installer/brahma2/data/
 	@cd payload_installer && make TARGET=../$(OUTDIR)/$(TARGET)
-	@echo INSTALLER done!
 
 clean:
 	@echo clean...

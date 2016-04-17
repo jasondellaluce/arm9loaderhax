@@ -5,6 +5,8 @@
 #define FB_TOP_RIGHT 0x18300000
 #define FB_BOTTOM 0x18346500
 
+void regSet();
+
 void __attribute__ ((naked)) a11Entry()
 {
     __asm__ ("ldr r0,=_stack\n\t mov sp, r0");

@@ -1,5 +1,5 @@
 OUTPUT_ARCH(arm)
-ENTRY(_entry)
+ENTRY(a11Entry)
 SECTIONS
 {
 	. = 0x1FFF4C80;

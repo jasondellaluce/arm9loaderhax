@@ -55,7 +55,7 @@ int main()
 
 	FATFS fs;
 	FIL payload;
-	u32 br;
+	unsigned int br;
 	
 	f_mount(&fs, "0:", 0); //This never fails due to deferred mounting
 	if(f_open(&payload, "arm9loaderhax.bin", FA_READ | FA_OPEN_EXISTING) == FR_OK)
@@ -64,7 +64,7 @@ int main()
 		clearScreen();
 		screenInit();
 
-		f_read(&payload, PAYLOAD_ADDRESS, PAYLOAD_SIZE, &br);
+		f_read(&payload, (void*)PAYLOAD_ADDRESS, PAYLOAD_SIZE, &br);
 		((void (*)())PAYLOAD_ADDRESS)();
 	}
 	
