@@ -77,7 +77,7 @@ int packAnalyze(void* buf, size_t size)
 				{
 					if(i < 2)
 					{
-						if(memcmp((void*)fixedHashes[i], (void*)header->entry[i].hash, 32) == 0)
+						if(i == 1 || memcmp((void*)fixedHashes[i], (void*)header->entry[i].hash, 32) == 0)
 						{
 							Debug("  [GOOD] %s", packEntryName[i]);
 						}
