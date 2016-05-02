@@ -1,6 +1,6 @@
 #include <inttypes.h>
 
-#define BRIGHTNESS 0x39
+#define BRIGHTNESS 0xFF
 #define FB_TOP_LEFT 0x18300000
 #define FB_TOP_RIGHT 0x18300000
 #define FB_BOTTOM 0x18346500
