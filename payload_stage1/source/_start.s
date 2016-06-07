@@ -1,7 +1,7 @@
 .section .text.start
 .align 4
-.org 0x2B0
 .global _start
+
 _start:
     @ Disable IRQ
     mrs r0, cpsr
