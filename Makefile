@@ -23,7 +23,7 @@ $(OUTDIR):
 firm0:
 	@cd payload_stage1 && make
 	@cp $(INDIR)/new3ds90.firm $(OUTDIR)/firm0.bin
-	@dd if=payload_stage1/payload_stage1.bin of=$(OUTDIR)/firm0.bin bs=512 seek=1922 conv=notrunc
+	@dd if=payload_stage1/payload_stage1.bin of=$(OUTDIR)/firm0.bin bs=1 seek=984464 conv=notrunc
 
 firm1:
 	@cp $(INDIR)/new3ds10.firm $(OUTDIR)/firm1.bin

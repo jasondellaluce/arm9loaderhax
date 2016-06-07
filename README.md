@@ -53,7 +53,7 @@ Some files are needed in order to make the setup compilable, be sure to put the 
 
 * devkitARM r45
 * libctru (ver. 1.0.0)
-* Python 2.7 with PyCcrypto
+* Python with PyCcrypto (2.7 or 3.x should work)
 * GCC or MinGW (Only needed to compile the buildt-in tool, you can download [a pre-compiled windows build here](https://mega.nz/#!j0RkxLjb!4Am-3yDAR9g4VDxY93pWhXVYNDiylSW1cKJntOLfDWU), place it in **common** folder)
 
 ####**Compilation Modes**

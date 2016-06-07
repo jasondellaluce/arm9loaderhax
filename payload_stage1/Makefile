@@ -126,7 +126,7 @@ $(OUTPUT).elf	:	$(OFILES)
 %.bin: %.elf
 	@$(OBJCOPY) --set-section-flags .bss=alloc,load,contents -O binary $< $@
 	@echo built ... $(notdir $@)
-	@rm -f $(OUTPUT).elf
+	#@rm -f $(OUTPUT).elf
 
 #---------------------------------------------------------------------------------
 # you need a rule like this for each extension you use as binary data
