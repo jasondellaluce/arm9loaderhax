@@ -7,22 +7,38 @@ _start:
     mrs r0, cpsr
     orr r0, r0, #0x80
     msr cpsr_c, r0
-	
-    @ Enable caches
+    
+    @ Disable caches and MPU
     mrc p15, 0, r0, c1, c0, 0  @ read control register
-    orr r0, r0, #(1<<12)       @ - instruction cache enable
-    orr r0, r0, #(1<<2)        @ - data cache enable
-    orr r0, r0, #(1<<0)        @ - mpu enable
+    bic r0, r0, #(1<<12)       @ - instruction cache enable
+    bic r0, r0, #(1<<2)        @ - data cache enable
+    bic r0, r0, #(1<<0)        @ - mpu enable
     mcr p15, 0, r0, c1, c0, 0  @ write control register
 
     @ Flush caches
-    mov r0, #0
-    mcr p15, 0, r0, c7, c5, 0  @ flush I-cache
-    mcr p15, 0, r0, c7, c6, 0  @ flush D-cache
-    mcr p15, 0, r0, c7, c10, 4 @ drain write buffer
+    ldr r0, =0xFFFF0830 @ Nintendo's flush function in unprot. bootrom
+    blx r0
 
     @ Change the stack pointer
     mov sp, #0x27000000
+
+    @ Set up GOT
+    sub r3, pc, #52
+    push {r3}
+    ldr r0, =__got_start
+    ldr r1, =__got_end
+
+    add r0, r0, r3
+    add r1, r1, r3
+
+    got_init:
+    cmp r0, r1
+    beq gotinit_done
+    ldr r2, [r0]
+    add r2, r2, r3
+    str r2, [r0], #4
+    b got_init
+    gotinit_done:
 
     @ Give read/write access to all the memory regions
     ldr r0, =0x33333333
@@ -49,10 +65,20 @@ _start:
     mov r0, #0x25
     mcr p15, 0, r0, c2, c0, 0  @ data cacheable
     mcr p15, 0, r0, c2, c0, 1  @ instruction cacheable
-	mov r0, #0x5 @ Fixes payloads which don't like FCRAM as "data bufferable"
+    mov r0, #0x5 @ Fixes payloads which don't like FCRAM as "data bufferable"
     mcr p15, 0, r0, c3, c0, 0  @ data bufferable
 
-    bl main
+    @ Enable caches and MPU
+    mrc p15, 0, r0, c1, c0, 0  @ read control register
+    orr r0, r0, #(1<<12)       @ - instruction cache enable
+    orr r0, r0, #(1<<2)        @ - data cache enable
+    orr r0, r0, #(1<<0)        @ - mpu enable
+    mcr p15, 0, r0, c1, c0, 0  @ write control register
+
+    pop {r3}
+    ldr r0, =main
+    add r0, r0, r3
+    blx r0
 
 .die:
     b .die
