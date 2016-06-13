@@ -13,9 +13,19 @@
 extern u8 screen_init_bin[];
 extern u32 screen_init_bin_size;
 
+static inline void* copy_memory(void *dst, void *src, size_t amount)
+{
+	void *result = dst;
+	while (amount--)
+	{
+		*((char*)(dst++)) = *((char*)(src++));
+	}
+	return result;
+}
+
 void ownArm11()
 {
-	memcpy((void*)A11_PAYLOAD_LOC, screen_init_bin, screen_init_bin_size);
+	copy_memory((void*)A11_PAYLOAD_LOC, screen_init_bin, screen_init_bin_size);
 	*((u32*)0x1FFAED80) = 0xE51FF004;
 	*((u32*)0x1FFAED84) = A11_PAYLOAD_LOC;
 	for(int i = 0; i < 0x80000; i++)

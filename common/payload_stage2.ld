@@ -4,7 +4,7 @@ ENTRY(_start)
 
 MEMORY
   {
-  ram : ORIGIN = 0x08006000, LENGTH = 0x10000K
+  ram : ORIGIN = 0x00, LENGTH = 0x10000K
   }
 
 SECTIONS
@@ -107,7 +107,11 @@ SECTIONS
 		. = ALIGN(4);   /* REQUIRED. LD is flaky without it. */
 	} >ram = 0xff
 	.jcr            : { KEEP (*(.jcr)) } >ram = 0
-	.got            : { *(.got.plt) *(.got) } >ram = 0
+	.got            : {
+		__got_start = .;
+		*(.got.plt) *(.got)
+	} >ram = 0
+	__got_end = .;
 
 	.data ALIGN(4) : 	{
 		__data_start = ABSOLUTE(.);
