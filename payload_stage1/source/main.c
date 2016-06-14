@@ -1,5 +1,6 @@
 #include "common.h"
 #include "sdmmc.h"
+#include "flush.h"
 
 int main()
 {
@@ -8,7 +9,7 @@ int main()
 	*(vu32*)0x10000020 = 0x340;
 	sdmmc_sdcard_init();
 	sdmmc_nand_readsectors(0x5C000, 0x20, (u8*)0x08006000);
-	
+	flush_all_caches();
 	// Jump to secondary payload
 	((void (*)())0x08006000)();
 	
