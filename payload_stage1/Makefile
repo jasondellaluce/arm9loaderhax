@@ -29,9 +29,9 @@ INCLUDES	:=	include source source/fatfs
 #---------------------------------------------------------------------------------
 # options for code generation
 #---------------------------------------------------------------------------------
-ARCH	:=	-mthumb -mthumb-interwork
+ARCH	:=	-mthumb -Wl,--use-blx
 
-CFLAGS	:=	-g -Wall -O2\
+CFLAGS	:=	-g -Wall -O2 -fPIC -flto -nostdlib\
 			-march=armv5te -mtune=arm946e-s -fomit-frame-pointer\
 			-ffast-math -std=c99\
 			$(ARCH)
@@ -40,8 +40,9 @@ CFLAGS	+=	$(INCLUDE)
 
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions
 
-ASFLAGS	:=	-g $(ARCH) 
-LDFLAGS	=	-nostartfiles -g $(ARCH) -Wl,-Map,$(TARGET).map
+ASFLAGS	:=	-g $(ARCH)
+LDFLAGS	=	-nostartfiles -g $(ARCH) -Wl,-Map,$(TARGET).map -nostdlib \
+			-Wl,--use-blx -fPIC
 
 LDFLAGS += --specs=../../common/payload_stage1.specs
 
@@ -88,7 +89,7 @@ endif
 #---------------------------------------------------------------------------------
 
 export OFILES	:= $(addsuffix .o,$(BINFILES)) \
-			$(SFILES:.s=.o) $(CPPFILES:.cpp=.o) $(CFILES:.c=.o) 
+			$(SFILES:.s=.o) $(CPPFILES:.cpp=.o) $(CFILES:.c=.o)
 
 export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
 			$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
@@ -105,7 +106,7 @@ $(BUILD):
 	@[ -d $(OUTPUT_D) ] || mkdir -p $(OUTPUT_D)
 	@[ -d $(BUILD) ] || mkdir -p $(BUILD)
 	@make --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
-		
+
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...
@@ -126,7 +127,7 @@ $(OUTPUT).elf	:	$(OFILES)
 %.bin: %.elf
 	@$(OBJCOPY) --set-section-flags .bss=alloc,load,contents -O binary $< $@
 	@echo built ... $(notdir $@)
-	#@rm -f $(OUTPUT).elf
+	@rm -f $(OUTPUT).elf
 
 #---------------------------------------------------------------------------------
 # you need a rule like this for each extension you use as binary data

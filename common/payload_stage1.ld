@@ -3,9 +3,10 @@ OUTPUT_ARCH(arm)
 ENTRY(_start)
 
 MEMORY
-  {
-  ram : ORIGIN = 0x0808FB90, LENGTH = 0x5k
-  }
+{
+	/* ram : ORIGIN = 0x0808FB90, LENGTH = 0x5k */
+	ram : ORIGIN = 0x00, LENGTH = 0x5k
+}
 
 SECTIONS
 {
@@ -107,7 +108,11 @@ SECTIONS
 		. = ALIGN(4);   /* REQUIRED. LD is flaky without it. */
 	} >ram = 0xff
 	.jcr            : { KEEP (*(.jcr)) } >ram = 0
-	.got            : { *(.got.plt) *(.got) } >ram = 0
+	.got            : {
+		__got_start = .;
+		*(.got.plt) *(.got)
+	} >ram = 0
+	__got_end = .;
 
 	.data ALIGN(4) : 	{
 		__data_start = ABSOLUTE(.);
